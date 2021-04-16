@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MonRecyclerViewAdapteur extends RecyclerView.Adapter<MonRecyclerViewAdapteur.ConteneurDeDonnee> {
+
+    private static DetecteurDeClicSurRecycler detecteurDeClicSurRecycler;
     private ArrayList<Donnee> donnees;
     public MonRecyclerViewAdapteur(ArrayList<Donnee> donnees) {
         this.donnees = donnees;
@@ -32,13 +34,30 @@ public class MonRecyclerViewAdapteur extends RecyclerView.Adapter<MonRecyclerVie
         return donnees.size();
     }
 
-    public static class ConteneurDeDonnee extends RecyclerView.ViewHolder {
+    public static class ConteneurDeDonnee extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_principal;
         TextView tv_auxiliaire;
         public ConteneurDeDonnee(View itemView) {
             super(itemView);
             tv_principal = (TextView) itemView.findViewById(R.id.tv_principal);
             tv_auxiliaire = (TextView) itemView.findViewById(R.id.tv_auxiliaire);
+            itemView.setOnClickListener((View.OnClickListener) this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            detecteurDeClicSurRecycler.clicSurRecyclerItem(getAdapterPosition(), v);
+
+
         }
     }
+
+
+
+    public void setDetecteurDeClicSurRecycler(DetecteurDeClicSurRecycler detecteurDeClicSurRecycler) {
+        this.detecteurDeClicSurRecycler = detecteurDeClicSurRecycler;
+    }
+
+
 }
